@@ -1,3 +1,4 @@
 Flask==3.0.3
 pypinyin==0.50.0
-pycantonese==4.0.0
+pycantonese==3.4.0
+gunicorn
