@@ -1,4 +1,6 @@
 Flask==3.0.3
+gunicorn
 pypinyin==0.50.0
 pycantonese==3.4.0
-gunicorn
+setuptools
+wheel
