@@ -1,28 +1,26 @@
 from flask import Flask, request, jsonify
-from pypinyin import pinyin, Style
-import pycantonese
+import pypinyin
+from jyutping import get_jyutping
 
 app = Flask(__name__)
 
-@app.route("/convert", methods=["GET"])
+@app.route("/convert")
 def convert():
     text = request.args.get("text", "")
-    
+    if not text:
+        return jsonify({"error": "no text provided"}), 400
+
     # Mandarin Pinyin
-    mandarin = " ".join(
-        ["".join(x) for x in pinyin(text, style=Style.TONE3, heteronym=False)]
-    )
-    
+    pinyin_list = pypinyin.lazy_pinyin(text, style=pypinyin.Style.TONE3)
+    pinyin = " ".join(pinyin_list)
+
     # Cantonese Jyutping
-    try:
-        jy_list = pycantonese.characters_to_jyutping(text)
-        jyutping = " ".join([t[1] for t in jy_list if t[1]])
-    except Exception as e:
-        jyutping = ""
-    
+    jyutping_list = [get_jyutping(char) or "" for char in text]
+    jyutping = " ".join(jyutping_list)
+
     return jsonify({
         "input": text,
-        "pinyin": mandarin,
+        "pinyin": pinyin,
         "jyutping": jyutping
     })
 

@@ -1,6 +1,6 @@
+jyutping==0.2.0
+pypinyin==0.50.0
 Flask==3.0.3
 gunicorn
-pypinyin==0.50.0
-pycantonese==3.4.0
 setuptools
 wheel
